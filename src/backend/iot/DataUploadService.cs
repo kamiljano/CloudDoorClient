@@ -1,13 +1,14 @@
 using System;
 using System.Text;
 using Microsoft.Azure.Devices.Client;
+using Microsoft.Azure.Devices.Shared;
 using Newtonsoft.Json;
 
 namespace CloudDoorCs.Backend {
 
     public class DataUploadService {
 
-        private DeviceClient client;
+        private readonly DeviceClient client;
 
         public DataUploadService(DeviceClient client) {
             this.client = client;
@@ -15,33 +16,16 @@ namespace CloudDoorCs.Backend {
 
         public void PublishDeviceInfo() {
             var deviceData = getDeviceData();
-            this.client.SendEventAsync(new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(deviceData))));
+            client.UpdateReportedPropertiesAsync(deviceData);
         }
 
-        private DeviceDataDto getDeviceData() {
-            return new DeviceDataDto {
-                os = new Os {
-                    type = Environment.OSVersion.Platform.ToString(),
-                    version = Environment.OSVersion.VersionString
-                },
-                currentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name
-            };
+        private TwinCollection getDeviceData() {
+            var collection = new TwinCollection();
+            collection["os"] = new TwinCollection();
+            collection["os"]["version"] = Environment.OSVersion.VersionString;
+            collection["os"]["type"] = Environment.OSVersion.Platform.ToString();
+            collection["currentUser"] = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            return collection;
         }
-    }
-
-    internal class DeviceDataDto {
-
-        internal Os os { get; set; }
-
-        internal string currentUser { get; set; }
-
-    }
-
-    internal class Os {
-
-        internal string version {get; set;}
-
-        internal string type {get; set;}
-
     }
 }
