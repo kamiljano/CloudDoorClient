@@ -8,7 +8,7 @@ namespace CloudDoorCs.Backend {
 
     public class BackendService {
 
-        private const string PATH_REGISTER = "/api/register";
+        private const string PATH_REGISTER = "/api/bots";
 
         private static readonly HttpClient client = new HttpClient();
 
@@ -22,7 +22,7 @@ namespace CloudDoorCs.Backend {
         }
 
         public RegistrationResultDto Register() {
-            using(var result = client.GetAsync(new Uri(this.backendUrl, PATH_REGISTER)).Result) {
+            using(var result = client.PutAsync(new Uri(this.backendUrl, PATH_REGISTER), new ByteArrayContent(new byte[]{})).Result) {
                 if(result.IsSuccessStatusCode) {
                     var resultResource = (RegistrationResultResource) JsonConvert.DeserializeObject(
                         result.Content.ReadAsStringAsync().Result, 

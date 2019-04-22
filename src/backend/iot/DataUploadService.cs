@@ -25,6 +25,7 @@ namespace CloudDoorCs.Backend {
             collection["os"]["version"] = Environment.OSVersion.VersionString;
             collection["os"]["type"] = Environment.OSVersion.Platform.ToString();
             collection["currentUser"] = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            //TODO: add CPU and memory
             return collection;
         }
     }
