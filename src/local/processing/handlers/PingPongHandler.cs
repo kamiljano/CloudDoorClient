@@ -20,7 +20,7 @@ namespace CloudDoorCs.Local {
 
     public class PingPongResponse {
 
-        public string Message {get; set;}
+        public string Message {get; internal set;}
 
     }
 }

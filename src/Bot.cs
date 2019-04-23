@@ -23,7 +23,8 @@ namespace CloudDoorCs {
             var client = DeviceClient.CreateFromConnectionString(config.ConnectionString, config.DeviceId, TransportType.Mqtt); //todo: other protocols
             new DataUploadService(client).PublishDeviceInfo();
             new MessageBroker(client)
-                .AddListener("ping", new PingPongHandler());
+                .AddListener("ping", new PingPongHandler())
+                .AddListener("dirList", new DirectoryListingHandler());
             Console.ReadLine();
         }
 
