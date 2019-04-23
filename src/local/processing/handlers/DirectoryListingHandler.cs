@@ -8,18 +8,12 @@ namespace CloudDoorCs.Local {
 
     public class DirectoryListingHandler : MethodCallHandler<DirectoryListingResponse, DirectoryListingRequest>
     {
-        private const string ROOT_PATH = "/";
-
         public DirectoryListingResponse handle(DirectoryListingRequest input)
         {
             string path = input.path.EndsWith("/") ? input.path : input.path + "/";
             return new DirectoryListingResponse {
-                files = ROOT_PATH.Equals(path) ? getDrives() : getFiles(path)
+                files = getFiles(path)
             };
-        }
-
-        private List<FileDto> getDrives() {
-            return new List<FileDto>();
         }
 
         private List<FileDto> getFiles(string path) {

@@ -24,6 +24,7 @@ namespace CloudDoorCs {
             new DataUploadService(client).PublishDeviceInfo();
             new MessageBroker(client)
                 .AddListener("ping", new PingPongHandler())
+                .AddListener("driveList", new DriveListingHandler())
                 .AddListener("dirList", new DirectoryListingHandler());
             Console.ReadLine();
         }
