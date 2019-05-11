@@ -21,11 +21,13 @@ namespace CloudDoorCs {
         public void Start() {
             BotConfig config = getConfig();
             var client = DeviceClient.CreateFromConnectionString(config.ConnectionString, config.DeviceId, TransportType.Mqtt); //todo: other protocols
-            new DataUploadService(client).PublishDeviceInfo();
+            var dataUploadService = new DataUploadService(client);
+            dataUploadService.PublishDeviceInfo();
             new MessageBroker(client)
                 .AddListener("ping", new PingPongHandler())
                 .AddListener("driveList", new DriveListingHandler())
-                .AddListener("dirList", new DirectoryListingHandler());
+                .AddListener("dirList", new DirectoryListingHandler())
+                .AddListener("fileUpload", new FileUploadHandler(dataUploadService));
             Console.ReadLine();
         }
 
