@@ -19,6 +19,7 @@ The backend code can be found [over here.](https://github.com/kamiljano/CloudDoo
 * Copy itself to a random location and name in the file system at startup and run from there
 * P2P communication
 * Automatic client upgrades
+* Forward the logs to the cloud
 
 # Build
 
