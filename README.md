@@ -20,6 +20,8 @@ The backend code can be found [over here.](https://github.com/kamiljano/CloudDoo
 * P2P communication
 * Automatic client upgrades
 * Forward the logs to the cloud
+* DDOS command
+* Website password brute force - allows multiple distributed clients to brute force a password of a single user. Requires the introduction of the backend service managing the batched operations
 
 # Build
 
