@@ -18,6 +18,7 @@ The backend code can be found [over here.](https://github.com/kamiljano/CloudDoo
 * Kill process when the native/third-party is switched on
 * Copy itself to a random location and name in the file system at startup and run from there
 * P2P communication
+* Automatic client upgrades
 
 # Build
 
