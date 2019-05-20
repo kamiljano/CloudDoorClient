@@ -29,7 +29,7 @@ namespace CloudDoorCs.Backend {
             collection["os"]["type"] = Environment.OSVersion.Platform.ToString();
             collection["currentUser"] = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             collection["specs"] = getSpecs();
-            //TODO: add CPU, memory, computer names
+            //TODO: computer name
             return collection;
         }
 
