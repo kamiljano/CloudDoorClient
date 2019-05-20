@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -16,20 +17,21 @@ namespace CloudDoorCs.Local {
             };
         }
 
-        private List<FileDto> getFiles(string path) {
-            var result = new List<FileDto>();
+        private List<AbstractFileDto> getFiles(string path) {
+            var result = new List<AbstractFileDto>();
 
             foreach (var dir in Directory.GetDirectories(path)) {
-                result.Add(new FileDto{
-                    type = FileType.DIR,
+                result.Add(new DirDto {
                     name = Path.GetFileName(dir)
                 });
             }
 
             foreach (var file in Directory.GetFiles(path)) {
+                var fileInfo = new FileInfo(file);
                 result.Add(new FileDto{
-                    type = FileType.FILE,
-                    name = Path.GetFileName(file)
+                    name = Path.GetFileName(file),
+                    size = fileInfo.Length,
+                    lastTouch = fileInfo.LastWriteTimeUtc
                 });
             }
             return result;
@@ -38,16 +40,38 @@ namespace CloudDoorCs.Local {
 
     public class DirectoryListingResponse {
         
-        public List<FileDto> files {get; internal set;}
+        public List<AbstractFileDto> files {get; internal set;}
 
     }
 
-    public class FileDto {
+    public abstract class AbstractFileDto {
 
         public string name {get; internal set;}
+
+    }
+
+    public class DirDto : AbstractFileDto {
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public FileType type {
+            get {
+                return FileType.DIR;
+            }
+        }
+    }
+
+    public class FileDto : AbstractFileDto {
         
         [JsonConverter(typeof(StringEnumConverter))]
-        public FileType type {get; internal set;}
+        public FileType type {
+            get {
+                return FileType.FILE;
+            }
+        }
+
+        public long size {get; internal set;}
+
+        public DateTime lastTouch {get; internal set;}
     }
 
     public enum FileType {

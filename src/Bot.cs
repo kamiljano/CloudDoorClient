@@ -41,7 +41,6 @@ namespace CloudDoorCs {
 
         private Config Register() {
             var dto = backendService.Register();
-            //TODO: publish client information and extract a registration service
             return fileService.SaveConfig(dto.ConnectionString, dto.DeviceId);
         }
     }

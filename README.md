@@ -6,6 +6,8 @@ The backend code can be found [over here.](https://github.com/kamiljano/CloudDoo
 
 # TODO
 
+* Environment specific configurations - right now the app always connects to the localhost. In real life situation it should connect directly to the azure server
+* Make application run fully in the background, so that the user is not aware of it
 * Find a way to run interactive CLIs
 * Download a file to the device
 * Upload video from the camera
