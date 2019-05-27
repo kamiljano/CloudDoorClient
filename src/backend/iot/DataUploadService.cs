@@ -29,7 +29,8 @@ namespace CloudDoorCs.Backend {
             collection["os"]["type"] = Environment.OSVersion.Platform.ToString();
             collection["currentUser"] = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             collection["specs"] = getSpecs();
-            //TODO: computer name
+            collection["name"] = Environment.MachineName;
+            //TODO: send AD info
             return collection;
         }
 
